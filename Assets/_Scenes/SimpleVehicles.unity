@@ -51,8 +51,8 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableBakedLightmaps: 0
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 12
     m_Resolution: 2
@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &14523151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +255,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicles:
   - {fileID: 138016391}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &91344048
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,12 +424,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 138016389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b96e613dbef6af4f9ac9708f9100349, type: 3}
+  m_Script: {fileID: 11500000, guid: 952958ff92e940d47b4e8e14765d76e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: a6cd4ce385ee6c343bbf61dbea3a1cc1, type: 2}
-  Target: {fileID: 960675216}
-  changeTargetDistance: 10
+  data: {fileID: 11400000, guid: 1bfb8d3f145b6a64592a9e3e97f4f91a, type: 2}
+  DecelerationTweaker: 30
+  slowdownDistance: 8
 --- !u!1 &340767348
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +627,7 @@ MonoBehaviour:
   - {fileID: 1099144835}
   - {fileID: 1091402827}
   - {fileID: 342747020}
+  n: 0
 --- !u!1 &941054599
 GameObject:
   m_ObjectHideFlags: 0

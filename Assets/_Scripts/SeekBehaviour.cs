@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SeekBehaviour : SteeringBehaviour
 {
-	public Transform Target;
 	public float changeTargetDistance;
 
+	private Transform target;
 	WaypointManager wm;
 
 	public override void Awake()
 	{
 		base.Awake();
-		//target = GameObject.Find("Target").transform;
+		target = GameObject.Find("Target").transform;
 	}
 
 	////Steering at full speed at all times
@@ -29,11 +29,12 @@ public class SeekBehaviour : SteeringBehaviour
 	//Steering at full speed at all times
 	public override Vector3 Steer()
 	{
-		Vector3 _desired = Target.position - transform.position;
+		Vector3 _desired = target.position - transform.position;
 		float _distanceToTarget = _desired.magnitude;
 		if (_distanceToTarget < changeTargetDistance)
 		{
 			wm.ChangeTarget();
+			target = wm.waypoints[wm.n].transform;
 		}
 		_desired.Normalize();
 		_desired *= vehicle.MaxSpeed;

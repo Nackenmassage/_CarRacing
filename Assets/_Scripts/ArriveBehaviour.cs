@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ArriveBehaviour : SteeringBehaviour
 {
+	public float DecelerationTweaker = 30f;
 	public float slowdownDistance;
 
 	private Transform target;
+	private float slowDownStartSpeed;
+	private bool isStartSpeedSet;
 
 	public override void Awake()
 	{
@@ -18,18 +21,30 @@ public class ArriveBehaviour : SteeringBehaviour
 	public override Vector3 Steer()
 	{
 		Vector3 _desired = target.position - transform.position;
+		Vector3 _steer = Vector3.zero;
 		float _distanceToTarget = _desired.magnitude;
 		if (_distanceToTarget < slowdownDistance)
 		{
+			if (!isStartSpeedSet)
+			{
+				slowDownStartSpeed = vehicle.Velocity.magnitude;
+				isStartSpeedSet = true;
+			}
 			float _t = _distanceToTarget / slowdownDistance;
-			_desired = _desired.normalized * _t * vehicle.MaxSpeed;
+			float _mappedSpeed = Mathf.Lerp(0f, slowDownStartSpeed, _t);
+			_mappedSpeed = _mappedSpeed <= 0.2f ? 0f : _mappedSpeed;
+			_desired = _desired.normalized * _mappedSpeed;
+			_steer = _desired - vehicle.Velocity;
+			float _decel = (1 - _t) * DecelerationTweaker;
+			_steer *= _decel;
 		}
 		else
 		{
+			isStartSpeedSet = false;
 			_desired = _desired.normalized * vehicle.MaxSpeed;
+			_steer = _desired - vehicle.Velocity;
+			_steer = Vector3.ClampMagnitude(_steer, vehicle.MaxForce);
 		}
-		Vector3 _steer = _desired - vehicle.Velocity;
-		_steer = Vector3.ClampMagnitude(_steer, vehicle.MaxForce);
 		return _steer;
 	}
 }

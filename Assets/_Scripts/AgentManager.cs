@@ -4,25 +4,38 @@ using UnityEngine;
 
 public class AgentManager : MonoBehaviour
 {
-	public Vehicle[] vehicles;
+	public Vehicle[] Vehicles;
+	public Obstacle[] Obstacles;
+	public Transform[] Waypoints;
 
 	void Start()
 	{
-		foreach (Vehicle vehicle in vehicles)
+		foreach (Vehicle vehicle in Vehicles)
 		{
 			SeperationBehaviour sb = vehicle.GetComponent<SeperationBehaviour>();
 			if (sb != null)
 			{
-				sb.vehicles = this.vehicles;
+				sb.vehicles = Vehicles;
+			}
+			ObstacleAvoidBehaviour oab = vehicle.GetComponent<ObstacleAvoidBehaviour>();
+			if(oab != null)
+			{
+				oab.Obstacles = Obstacles;
+			}
+			WaypointFollowBehaviour wfb = vehicle.GetComponent<WaypointFollowBehaviour>();
+			if(wfb != null)
+			{
+				wfb.Waypoints = Waypoints;
+				wfb.CurTarget = Waypoints[0];
 			}
 		}
 	}
 
 	void Update()
 	{
-		for (int v = 0; v < vehicles.Length; v++)
+		for (int v = 0; v < Vehicles.Length; v++)
 		{
-			Vehicle vehicle = vehicles[v];
+			Vehicle vehicle = Vehicles[v];
 			SteeringBehaviour[] steeringBehaviours = vehicle.steeringBehaviour;
 			for (int sbIdx = 0; sbIdx < steeringBehaviours.Length; sbIdx++)
 			{

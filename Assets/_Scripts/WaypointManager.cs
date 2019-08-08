@@ -5,19 +5,18 @@ using UnityEngine;
 public class WaypointManager : MonoBehaviour
 {
 	public GameObject[] waypoints;
-	private int i = 0;
+	public int n = 0;
 
 	SeekBehaviour seekBehaviour;
 
-	void Awake()
-	{
-		seekBehaviour.Target = waypoints[i].transform;
-	}
+	//void Start()
+	//{
+	//	seekBehaviour.Target = waypoints[n].transform;
+	//}
 
 	public void ChangeTarget()
 	{
-		i++;
-		if(i > waypoints.Length) { i = 0; }
-		seekBehaviour.Target = waypoints[i].transform;
+		n++;
+		if(n > waypoints.Length) { n = 0; }
 	}
 }

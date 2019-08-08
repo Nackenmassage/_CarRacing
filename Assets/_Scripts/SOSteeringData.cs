@@ -6,4 +6,5 @@ using UnityEngine;
 public class SOSteeringData : ScriptableObject
 {
 	public float Weight;
+	public float Priority;
 }

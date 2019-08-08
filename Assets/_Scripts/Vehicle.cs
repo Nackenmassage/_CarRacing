@@ -19,13 +19,15 @@ public class Vehicle : MonoBehaviour
 
 	public void ApplyForce(Vector3 _force, float _weight)
 	{
-		acceleration += (_force * _weight) / Mass;
+		_force = (Time.deltaTime / Mass) * _force;
+		_force *= _weight;
+		acceleration += _force;
 		acceleration = Vector3.ClampMagnitude(acceleration, MaxForce);
 	}
 
 	public void UpdateVehicle()
 	{
-		Velocity += acceleration * Time.deltaTime;
+		Velocity += acceleration;
 		Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
 		transform.position += Velocity * Time.deltaTime;
 		acceleration = Vector3.zero;
