@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Steering Data Seek
   m_EditorClassIdentifier: 
   Weight: 1
+  Priority: 6

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Steering Data Arrive
   m_EditorClassIdentifier: 
   Weight: 1
+  Priority: 5

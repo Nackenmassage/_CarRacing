@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,10 +12,12 @@ public class Vehicle : MonoBehaviour
 	public float MaxSpeed = 1f;
 
 	private Vector3 acceleration;
+	private float magnitudeCheck;
 
 	private void Awake()
 	{
 		steeringBehaviour = GetComponents<SteeringBehaviour>();
+		magnitudeCheck = MaxForce;
 	}
 
 	public void ApplyForce(Vector3 _force, float _weight)
@@ -22,7 +25,20 @@ public class Vehicle : MonoBehaviour
 		_force = (Time.deltaTime / Mass) * _force;
 		_force *= _weight;
 		acceleration += _force;
-		acceleration = Vector3.ClampMagnitude(acceleration, MaxForce);
+		//_force = Vector3.ClampMagnitude(_force, MaxForce);
+		magnitudeCheck -= _force.magnitude;
+		if(magnitudeCheck > 0f)
+		{
+			// wenn die ausgerechnete magnitude kleiner ist als die max force, einfach zur gesamtmenge dazurechnen
+			acceleration += _force;
+		}
+		else
+		{
+			// ansonsten bringe den vektor auf die länge der verbleibenden magnitude
+			acceleration += Vector3.ClampMagnitude(acceleration, (_force.magnitude - magnitudeCheck));
+			//acceleration = acceleration.normalized * MaxForce;
+			//acceleration = Vector3.ClampMagnitude(acceleration, MaxForce);
+		}
 	}
 
 	public void UpdateVehicle()
@@ -31,5 +47,6 @@ public class Vehicle : MonoBehaviour
 		Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
 		transform.position += Velocity * Time.deltaTime;
 		acceleration = Vector3.zero;
+		magnitudeCheck = MaxForce;
 	}
 }

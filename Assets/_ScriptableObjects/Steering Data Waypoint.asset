@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8abbaf114839d2b4d8a5b47ac86eaabf, type: 3}
   m_Name: Steering Data Waypoint
   m_EditorClassIdentifier: 
-  Weight: 2
+  Weight: 1
+  Priority: 2
