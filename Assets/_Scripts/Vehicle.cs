@@ -10,6 +10,9 @@ public class Vehicle : MonoBehaviour
 	public float Mass = 1f;
 	public float MaxForce = 1f;
 	public float MaxSpeed = 1f;
+	public bool debugVelocity;
+	public string debugString;
+	public GUIStyle style;
 
 	private Vector3 acceleration;
 	private float magnitudeCheck;
@@ -22,11 +25,12 @@ public class Vehicle : MonoBehaviour
 
 	public void ApplyForce(Vector3 _force, float _weight)
 	{
-		_force = (Time.deltaTime / Mass) * _force;
 		_force *= _weight;
+		magnitudeCheck -= _force.magnitude;
+		debugString += magnitudeCheck + "\n";
+		_force = (Time.deltaTime / Mass) * _force;
 		acceleration += _force;
 		//_force = Vector3.ClampMagnitude(_force, MaxForce);
-		magnitudeCheck -= _force.magnitude;
 		if(magnitudeCheck > 0f)
 		{
 			// wenn die ausgerechnete magnitude kleiner ist als die max force, einfach zur gesamtmenge dazurechnen
@@ -48,5 +52,17 @@ public class Vehicle : MonoBehaviour
 		transform.position += Velocity * Time.deltaTime;
 		acceleration = Vector3.zero;
 		magnitudeCheck = MaxForce;
+	}
+
+	private void OnGUI()
+	{
+		if (!debugVelocity) { return; }
+		GUILayout.Label(debugString, style);
+	}
+
+	private void OnDrawGizmos()
+	{
+		if (!debugVelocity) { return; }
+		Gizmos.DrawWireSphere(transform.position, 0.5f);
 	}
 }

@@ -43,9 +43,11 @@ public class AgentManager : MonoBehaviour
 		{
 			Vehicle vehicle = Vehicles[v];
 			SteeringBehaviour[] steeringBehaviours = vehicle.steeringBehaviour;
+			vehicle.debugString = "";
 			for (int sbIdx = 0; sbIdx < steeringBehaviours.Length; sbIdx++)
 			{
 				var sb = steeringBehaviours[sbIdx];
+				vehicle.debugString += sb.GetType() + "\n";
 				Vector3 _steer = sb.Steer();
 				vehicle.ApplyForce(_steer, sb.data.Weight);
 			}
