@@ -8,6 +8,7 @@ public class AgentManager : MonoBehaviour
 	public Vehicle[] Vehicles;
 	public Obstacle[] Obstacles;
 	public Transform[] Waypoints;
+	public LinePath LinePath;
 
 	void Start()
 	{
@@ -28,12 +29,18 @@ public class AgentManager : MonoBehaviour
 			{
 				oab.Obstacles = Obstacles;
 			}
-			WaypointFollowBehaviour wfb = vehicle.GetComponent<WaypointFollowBehaviour>();
-			if (wfb != null)
+			PathFollowBehaviour pfb = vehicle.GetComponent<PathFollowBehaviour>();
+			if(pfb != null)
 			{
-				wfb.Waypoints = Waypoints;
-				wfb.CurTarget = Waypoints[0];
+				pfb.LineSegments = LinePath.LineSegments;
+				pfb.SetData(0);
 			}
+			//WaypointFollowBehaviour wfb = vehicle.GetComponent<WaypointFollowBehaviour>();
+			//if (wfb != null)
+			//{
+			//	wfb.Waypoints = Waypoints;
+			//	wfb.CurTarget = Waypoints[0];
+			//}
 		}
 	}
 
