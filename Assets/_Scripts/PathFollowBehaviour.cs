@@ -20,6 +20,7 @@ public class PathFollowBehaviour : SteeringBehaviour
 		Vector3 _startToEnd = _end - _start;
 		Vector3 _startToEndDir = _startToEnd.normalized;
 		float _dot = Vector3.Dot(_startToFuturePos, _startToEndDir);
+		_dot = Mathf.Abs(_dot);
 		Vector3 _normalPoint = _start + (_startToEndDir * _dot);
 
 		if((_startToEndDir * _dot).sqrMagnitude > _startToEnd.sqrMagnitude)
