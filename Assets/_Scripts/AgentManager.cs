@@ -44,7 +44,7 @@ public class AgentManager : MonoBehaviour
 		}
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		for (int v = 0; v < Vehicles.Length; v++)
 		{

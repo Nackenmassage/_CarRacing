@@ -16,11 +16,13 @@ public class Vehicle : MonoBehaviour
 
 	private Vector3 acceleration;
 	private float magnitudeCheck;
+	private Rigidbody rb;
 
 	private void Awake()
 	{
 		steeringBehaviour = GetComponents<SteeringBehaviour>();
 		magnitudeCheck = MaxForce;
+		rb = GetComponent<Rigidbody>();
 	}
 
 	public void ApplyForce(Vector3 _force, float _weight)
@@ -28,7 +30,7 @@ public class Vehicle : MonoBehaviour
 		_force *= _weight;
 		magnitudeCheck -= _force.magnitude;
 		debugString += magnitudeCheck + "\n";
-		_force = (Time.deltaTime / Mass) * _force;
+		_force = (Time.fixedDeltaTime / Mass) * _force;
 		acceleration += _force;
 		//_force = Vector3.ClampMagnitude(_force, MaxForce);
 		if(magnitudeCheck > 0f)
@@ -49,7 +51,10 @@ public class Vehicle : MonoBehaviour
 	{
 		Velocity += acceleration;
 		Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
-		transform.position += Velocity * Time.deltaTime;
+		//transform.position += Velocity * Time.deltaTime;
+		Velocity = new Vector3(Velocity.x, -9.81f, Velocity.z);
+		rb.velocity = Velocity;
+		//rb.AddForce(Velocity);									//NSFW
 		acceleration = Vector3.zero;
 		magnitudeCheck = MaxForce;
 	}
